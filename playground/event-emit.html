@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <app-header v-on:pass="logText"></app-header>
+    <app-content
+      v-on:increase="addNumber"
+      v-on:decrease="subtractNumber"
+    ></app-content>
+    <p>{{num}}</p>
+  </div>
+
+  <script>
+    var appHeader = {
+      template : '<button v-on:click="passEvent">click me</button>',
+      methods : {
+        //v-on:하위컴포넌트에서 발생한 이벤트="상위컴포넌트의 메서드 이름"
+        passEvent : function(){
+          this.$emit('pass');
+        }
+      }
+    }
+
+    var appContent  = {
+      template : `<div>
+        <p>{{propsdata}}</p>
+        <button v-on:click="add">increase</button>
+        <button v-on:click="minus">decrease</button>
+      </div>`,
+      props : ['propsdata'],
+      methods : {
+        add : function(){
+          this.$emit('increase')
+        },
+        minus : function(){
+          this.$emit('decrease');
+        }
+      },
+    }
+
+    new Vue({
+      el : '#app',
+      components : {
+        'app-header' : appHeader,
+        'app-content' : appContent
+      },
+      data : {
+        num : 0
+      },
+      methods : {
+        logText : function(){
+          console.log('log hi');
+        },
+        addNumber : function(){
+          this.num++;
+        },
+        subtractNumber : function(){
+          this.num--;
+        }
+      }
+    })
+
+
+    //Vue 인스턴스에서 this
+    //* 객체 안에서 this는 해당 object를 바라본다.
+    //* 메소드안에서 this 또한 object의 값
+    // this의 용법은 4ㄱ
+  </script>
+</body>
+</html>

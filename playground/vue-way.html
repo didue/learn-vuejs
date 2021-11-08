@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    var div = document.querySelector('#app');
+    // div.innerHTML = 'hello vue.js';
+
+    var viewModel = {};
+    //객체의 동작을 재정의하는 api
+    // Object.defineProperty(대상객체, 객체속성 {정의할내용})
+
+    (function(){
+      function init(){
+        Object.defineProperty(viewModel, 'str', {
+        get : function() {
+          console.log('접근 ');
+        },
+        set : function(newValue) {
+          console.log('할당 ', newValue);
+          render(newValue);
+        }
+      })
+      }
+      
+      function render(newValue){
+        div.innerHTML = newValue;
+      }
+
+      init();
+    })();
+    
+  </script> 
+</body>
+</html>
+<!-- 
+  vue의 reactivity(반응성)
+  데이터의 변화를 library에서 감지해서 화면을 그려주는 특성이 vue의 핵심이다.
+
+
+ -->
